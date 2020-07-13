@@ -11,7 +11,6 @@ ENV GOVC_INSECURE $GOVC_INSECURE
 
 RUN apt-get update && \
     apt-get install -y curl && \
-#    apt-get install -y jq && \
     apt-get clean
 
 # Grab the latest govmomi release and set it up.
@@ -24,5 +23,4 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN mkdir /scripts
 COPY vsphere-cns-roles-setup.sh /scripts
 
-CMD ["/scripts/vsphere-cns-roles-setup.sh"]
-
+ENTRYPOINT ["/bin/bash", "/scripts/vsphere-cns-roles-setup.sh"]

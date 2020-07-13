@@ -46,12 +46,12 @@ create-update
 
 rolename="CNS-DATASTORE"
 permissions="Cns.Searchable Datastore.FileManagement System.Anonymous System.Read System.View"
-#create-update
+create-update
 
 rolename="CNS-VM"
 permissions="System.Anonymous System.Read System.View VirtualMachine.Config.AddExistingDisk VirtualMachine.Config.AddRemoveDevice"
-#create-update
+create-update
 
 rolename="CNS-SEARCH-AND-SPBM"
 permissions="Cns.Searchable StorageProfile.View System.Anonymous System.Read System.View"
-#create-update
+create-update
