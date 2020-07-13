@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: setup-vsphere-cns
+  labels:
+    identifier: "vsphere-cns-setup"
+spec:
+  template:
+    metadata:
+      labels:
+        identifier: "vsphere-cns-setup"
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: cns-setup
+          image: robbiej/vsphere-cns-setup:latest
+          command: []
+          args: []
+          env:
+            - name: GOVC_URL
+              value: "https://administrator@sso.vsphere.local:Pa$$word@vc.vsphere.local/sdk"
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1G
+            requests:
+              cpu: "0.5"
+              memory: 0.5G
