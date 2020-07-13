@@ -40,18 +40,18 @@ echo -e "Setting up vSphere Cloud Native Storage Roles inside Virtual Center\n"
 echo -e "If you encounter a problem please open a github issue.\n\n"
 check-envvar
 check-connect
-rolename="CNS-HOST-CONFIG-STORAGE-TEST2"
+rolename="CNS-HOST-CONFIG-STORAGE"
 permissions="System.Anonymous System.Read System.View VirtualMachine.Config.AddExistingDisk VirtualMachine.Config.AddRemoveDevice"
 create-update
 
-rolename="CNS-DATASTORE2"
+rolename="CNS-DATASTORE"
 permissions="Cns.Searchable Datastore.FileManagement System.Anonymous System.Read System.View"
 #create-update
 
-rolename="CNS-VM2"
+rolename="CNS-VM"
 permissions="System.Anonymous System.Read System.View VirtualMachine.Config.AddExistingDisk VirtualMachine.Config.AddRemoveDevice"
 #create-update
 
-rolename="CNS-SEARCH-AND-SPBM2"
+rolename="CNS-SEARCH-AND-SPBM"
 permissions="Cns.Searchable StorageProfile.View System.Anonymous System.Read System.View"
 #create-update
