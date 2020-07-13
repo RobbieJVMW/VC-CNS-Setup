@@ -1,19 +1,28 @@
-FROM photon:3.0
-  
+FROM ubuntu:latest
+
+MAINTAINER rjerrom@vmware.com
 LABEL authors="rjerrom@vmware.com"
 
 ENV TERM linux
 
-WORKDIR /root
+#give envvar GOVVC_INSECURE a default of 1 (true) - override for production to verify cert.
+ARG GOVC_INSECURE=1
+ENV GOVC_INSECURE $GOVC_INSECURE
 
-# Set terminal. If we don't do this, weird readline things happen.
-RUN echo "/usr/bin/pwsh" >> /etc/shells && \
-    echo "/bin/pwsh" >> /etc/shells && \
-    tdnf install -y powershell-7.0.0-1.ph3 unzip && \
-    pwsh -c "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted" && \
-    pwsh -c "\$ProgressPreference = \"SilentlyContinue\"; Install-Module VMware.PowerCLI -RequiredVersion 12.0.0.15947286" && \
-    find / -name "net45" | xargs rm -rf && \
-    tdnf erase -y unzip && \
-    tdnf clean all
+RUN apt-get update && \
+    apt-get install -y curl && \
+#    apt-get install -y jq && \
+    apt-get clean
 
-CMD ["/bin/pwsh"]
+# Grab the latest govmomi release and set it up.
+RUN curl -L $(curl -s https://api.github.com/repos/vmware/govmomi/releases/latest | grep browser_download_url | grep govc_linux_amd64 | cut -d '"' -f 4) | gunzip > /usr/local/bin/govc && \
+    chmod +x /usr/local/bin/govc
+
+# Clean up APT when done.
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN mkdir /scripts
+COPY vsphere-cns-roles-setup.sh /scripts
+
+CMD ["/scripts/vsphere-cns-roles-setup.sh"]
+
